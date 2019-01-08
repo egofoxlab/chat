@@ -30,7 +30,9 @@
                             "src/styles.scss"
                         ],
                         "scripts": [
-                            "./node_modules/jquery/dist/jquery.min.js"
+                            "./node_modules/jquery/dist/jquery.min.js",
+                            "./src/assets/egofoxlab/utils.js",
+                            "./src/assets/egofoxlab/ego-suite/chat/chat.js"
                         ]
                     },
                     "configurations": {
