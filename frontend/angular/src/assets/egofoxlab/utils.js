@@ -311,6 +311,73 @@ function setFieldValue(eField, value) {
 	}
 }
 
+/**
+ * Set listener. Add listener to array
+ *
+ * @param {Function[]} arr - List of listeners
+ * @param {Function} listener - Listener
+ * @returns {boolean}
+ */
+function setListener(arr, listener) {
+	if (!Array.isArray(arr) || typeof listener !== 'function') {
+		return false;
+	}
+
+	arr.push(listener);
+
+	return true;
+}
+
+/**
+ * Remove listener from array.
+ *
+ * @param {Function[]} arr - List of listeners
+ * @param {Function} listener - Listener
+ * @returns {boolean}
+ */
+function removeListener(arr, listener) {
+	if (!Array.isArray(arr) || typeof listener !== 'function') {
+		return false;
+	}
+
+	var index = null;
+
+	arr.some(function (item, i) {
+		if (typeof item === 'function' && item === listener) {
+			index = i;
+
+			return true;
+		}
+	});
+
+	if (index !== null) {
+		arr.splice(index, 1);
+	}
+
+	return true;
+}
+
+/**
+ * Traversing an array of listeners. Call `handler` for each listener and pass it.
+ *
+ * @param {Function[]} arr - List of listeners
+ * @param {Function} handler - Handler for each listener
+ * @returns {boolean}
+ */
+function eachListener(arr, handler) {
+	if (!Array.isArray(arr) && typeof handler !== 'function') {
+		return false;
+	}
+
+	arr.forEach(function (item) {
+		if (typeof item === 'function') {
+			handler(item);
+		}
+	});
+
+	return true;
+}
+
 String.prototype.trunc = function (n, useWordBoundary) {
 	if (this.length <= n) {
 		return this;

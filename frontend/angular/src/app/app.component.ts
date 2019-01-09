@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, ElementRef} from '@angular/core';
 import * as $ from 'jquery';
+import {of} from "rxjs";
 
 declare let EgoChat;
 
@@ -12,6 +13,7 @@ export class AppComponent implements AfterViewInit {
     title = 'frontend';
 
     private elementRef;
+    private egoChat;
     private connection;
 
     constructor(private _elementRef: ElementRef) {
@@ -23,27 +25,16 @@ export class AppComponent implements AfterViewInit {
     }
 
     private initChat() {
-        const egoChat = new EgoChat({
-            serverUrl: 'ws://localhost:7000'
+        this.egoChat = new EgoChat({
+            serverUrl: 'ws://localhost:7000',
+            onOpen: [this.onOpen.bind(this)]
         });
 
-        egoChat.setOnOpen((e) => {
-            console.log(e);
-        });
+        this.egoChat.init();
+    }
 
-        egoChat.init();
-
-        /*this.connection = new WebSocket('ws://localhost:7000');
-
-        this.connection.onopen = (e: any) => {
-            console.log(`WS - OPEN CONNECTION`);
-        };
-
-        this.connection.onmessage = (e: any) => {
-            console.log(`WS - OPEN MESSAGE: ${e.data}`);
-
-            this.addMessage(e.data);
-        };*/
+    private onOpen(e) {
+        console.log(e);
     }
 
     private addMessage(message: string) {
@@ -61,7 +52,7 @@ export class AppComponent implements AfterViewInit {
     }
 
     public eventSend(e) {
-        let input = this.elementRef.find('#chat-input').val();
+        /*let input = this.elementRef.find('#chat-input').val();
 
         if (input === undefined || input === null) {
             alert('Fill input field!');
@@ -75,7 +66,7 @@ export class AppComponent implements AfterViewInit {
 
         this.connection.send(input);
 
-        this.elementRef.find('#chat-input').val('');
+        this.elementRef.find('#chat-input').val('');*/
     }
 
 }
