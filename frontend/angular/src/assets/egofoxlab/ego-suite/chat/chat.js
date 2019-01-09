@@ -193,6 +193,7 @@ function EgoChat(options) {
 	};
 	//endregion
 
+	//	Handle input options from users
 	_handleInputOptions();
 
 	self.init = function () {
