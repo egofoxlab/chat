@@ -1,3 +1,13 @@
+/*
+ * Developed by EGOFOXLAB.
+ * Site http://egofoxlab.com/
+ * Copyright (c) 2019.
+ */
+
+function EgoUtil() {
+
+}
+
 /**
  * Send request
  *
@@ -11,7 +21,7 @@
  * @param {Function} [params.notSuccess=null] params.notSuccess callback for not success event
  * @param {Function} [params.error=null] params.error callback for error event
  */
-function _request(params) {
+EgoUtil._request = function (params) {
 	var $ = jQuery;
 
 	var defaults = {
@@ -35,8 +45,7 @@ function _request(params) {
 
 			if (typeof params.success === 'function') {
 				params.success.call(this, response);
-			}
-			else if (typeof params.success === 'object') {
+			} else if (typeof params.success === 'object') {
 				alert(params.success.text);
 			}
 		},
@@ -52,7 +61,7 @@ function _request(params) {
 	};
 
 	$.ajax(defaults);
-}
+};
 
 /**
  * Check that form is empty or not
@@ -60,7 +69,7 @@ function _request(params) {
  * @param {Object} data
  * @return {Boolean}
  */
-function checkEmptyForm(data) {
+EgoUtil.checkEmptyForm = function (data) {
 	for (var key in data) {
 		if (!data.hasOwnProperty(key)) {
 			continue;
@@ -74,14 +83,14 @@ function checkEmptyForm(data) {
 	}
 
 	return true;
-}
+};
 
 /**
  * Collect data from form
  *
  * Return array in format
  * [
- * 		FIELD_NAME_ATTR: {
+ *        FIELD_NAME_ATTR: {
  * 				value: FIELD_VALUE,
  * 				required: IF_FIELD_REQUIRED,
  *	 			description: FIELD_LABEL//	Field label or `data-description` field attribute
@@ -92,7 +101,7 @@ function checkEmptyForm(data) {
  * @param {Object} container
  * @return {Object}
  */
-function collectFormData(selector, container) {
+EgoUtil.collectFormData = function (selector, container) {
 	var $ = jQuery;
 
 	if (empty(container)) {
@@ -116,7 +125,7 @@ function collectFormData(selector, container) {
 			description = node.attr('data-description');
 		}
 
-		switch(node.attr('type')) {
+		switch (node.attr('type')) {
 			case 'checkbox':
 				value = [];
 
@@ -173,7 +182,7 @@ function collectFormData(selector, container) {
 	});
 
 	return result;
-}
+};
 
 /**
  * Is the required fields is Empty?
@@ -182,7 +191,7 @@ function collectFormData(selector, container) {
  * @param formData
  * @returns {boolean}
  */
-function isRequiredFieldsEmpty(formData) {
+EgoUtil.isRequiredFieldsEmpty = function (formData) {
 	for (var key in formData) {
 		if (!formData.hasOwnProperty(key)) {
 			continue;
@@ -196,7 +205,7 @@ function isRequiredFieldsEmpty(formData) {
 	}
 
 	return false;
-}
+};
 
 /**
  * Check that object is array
@@ -204,9 +213,9 @@ function isRequiredFieldsEmpty(formData) {
  * @param mixed_var
  * @returns {boolean}
  */
-function is_array(mixed_var) {
+EgoUtil.is_array = function (mixed_var) {
 	return mixed_var instanceof Array;
-}
+};
 
 /**
  * Check empty value
@@ -214,7 +223,7 @@ function is_array(mixed_var) {
  * @param mixed_var
  * @returns {boolean}
  */
-function empty(mixed_var) {
+EgoUtil.empty = function (mixed_var) {
 	var result = true;
 
 	try {
@@ -234,8 +243,9 @@ function empty(mixed_var) {
 		console.log(e);
 		result = true;
 	}
+
 	return result;
-}
+};
 
 /**
  * Return URL parameter
@@ -244,18 +254,18 @@ function empty(mixed_var) {
  * @param {String} [url]
  * @returns {string | null}
  */
-function getUrlParam(param, url) {
+EgoUtil.getUrlParam = function (param, url) {
 	url = empty(url) ? window.location.href : url;
 
 	return (new URL(url)).searchParams.get(param);
-}
+};
 
 /**
  * Clear all input fields in container
  *
  * @param eContainer
  */
-function clearFields(eContainer) {
+EgoUtil.clearFields = function (eContainer) {
 	var $ = jQuery;
 
 	eContainer = $(eContainer);
@@ -266,7 +276,7 @@ function clearFields(eContainer) {
 		.val('')
 		.prop('checked', false)
 		.prop('selected', false);
-}
+};
 
 /**
  * Set Field value
@@ -274,7 +284,7 @@ function clearFields(eContainer) {
  * @param eField
  * @param value
  */
-function setFieldValue(eField, value) {
+EgoUtil.setFieldValue = function (eField, value) {
 	var $ = jQuery;
 	eField = $(eField);
 	var tagName = eField.prop('tagName'),
@@ -303,13 +313,12 @@ function setFieldValue(eField, value) {
 
 				break;
 		}
-	}
-	else if (tagName === 'select') {
+	} else if (tagName === 'select') {
 		eField
 			.val(value)
 			.change();
 	}
-}
+};
 
 /**
  * Set listener. Add listener to array
@@ -318,7 +327,7 @@ function setFieldValue(eField, value) {
  * @param {Function} listener - Listener
  * @returns {boolean}
  */
-function setListener(arr, listener) {
+EgoUtil.setListener = function (arr, listener) {
 	if (!Array.isArray(arr) || typeof listener !== 'function') {
 		return false;
 	}
@@ -326,7 +335,7 @@ function setListener(arr, listener) {
 	arr.push(listener);
 
 	return true;
-}
+};
 
 /**
  * Remove listener from array.
@@ -335,7 +344,7 @@ function setListener(arr, listener) {
  * @param {Function} listener - Listener
  * @returns {boolean}
  */
-function removeListener(arr, listener) {
+EgoUtil.removeListener = function (arr, listener) {
 	if (!Array.isArray(arr) || typeof listener !== 'function') {
 		return false;
 	}
@@ -355,7 +364,7 @@ function removeListener(arr, listener) {
 	}
 
 	return true;
-}
+};
 
 /**
  * Traversing an array of listeners. Call `handler` for each listener and pass it.
@@ -364,7 +373,7 @@ function removeListener(arr, listener) {
  * @param {Function} handler - Handler for each listener
  * @returns {boolean}
  */
-function eachListener(arr, handler) {
+EgoUtil.eachListener = function (arr, handler) {
 	if (!Array.isArray(arr) && typeof handler !== 'function') {
 		return false;
 	}
@@ -376,9 +385,9 @@ function eachListener(arr, handler) {
 	});
 
 	return true;
-}
+};
 
-String.prototype.trunc = function (n, useWordBoundary) {
+/*String.prototype.trunc = function (n, useWordBoundary) {
 	if (this.length <= n) {
 		return this;
 	}
@@ -388,4 +397,4 @@ String.prototype.trunc = function (n, useWordBoundary) {
 	return (useWordBoundary
 		? subString.substr(0, subString.lastIndexOf(' '))
 		: subString) + "&hellip;";
-};
+};*/

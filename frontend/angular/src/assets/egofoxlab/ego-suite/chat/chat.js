@@ -92,7 +92,7 @@ function EgoChat(options) {
 	 * @param {Function} onClose
 	 */
 	self.setOnClose = function(onClose) {
-		setListener(self.onClose, onClose);
+		EgoUtil.setListener(self.onClose, onClose);
 	};
 
 	/**
@@ -119,7 +119,7 @@ function EgoChat(options) {
 	 * @param {Function} onError
 	 */
 	self.setOnError = function(onError) {
-		setListener(self.onError, onError);
+		EgoUtil.setListener(self.onError, onError);
 	};
 
 	/**
@@ -146,7 +146,7 @@ function EgoChat(options) {
 	 * @param {Function} onMessage
 	 */
 	self.setOnMessage = function(onMessage) {
-		setListener(self.onMessage, onMessage);
+		EgoUtil.setListener(self.onMessage, onMessage);
 	};
 
 	/**
@@ -173,7 +173,7 @@ function EgoChat(options) {
 	 * @param {Function} onOpen
 	 */
 	self.setOnOpen = function (onOpen) {
-		setListener(self.onOpen, onOpen);
+		EgoUtil.setListener(self.onOpen, onOpen);
 	};
 
 	/**
@@ -276,7 +276,7 @@ function EgoChat(options) {
 	 * @private
 	 */
 	function _onClose(e) {
-		eachListener(self.onClose, function (listener) {
+		EgoUtil.eachListener(self.onClose, function (listener) {
 			listener(e);
 		});
 	}
@@ -288,7 +288,7 @@ function EgoChat(options) {
 	 * @private
 	 */
 	function _onError(e) {
-		eachListener(self.onError, function (listener) {
+		EgoUtil.eachListener(self.onError, function (listener) {
 			listener(e);
 		});
 	}
@@ -300,7 +300,7 @@ function EgoChat(options) {
 	 * @private
 	 */
 	function _onMessage(e) {
-		eachListener(self.onMessage, function (listener) {
+		EgoUtil.eachListener(self.onMessage, function (listener) {
 			listener(e);
 		});
 	}
@@ -312,7 +312,7 @@ function EgoChat(options) {
 	 * @private
 	 */
 	function _onOpen(e) {
-		eachListener(self.onOpen, function (listener) {
+		EgoUtil.eachListener(self.onOpen, function (listener) {
 			listener(e);
 		});
 	}

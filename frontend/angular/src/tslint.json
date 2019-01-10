@@ -16,6 +16,7 @@
         "no-trailing-whitespace": false,
         "no-redundant-jsdoc": false,
         "comment-format": false,
-        "quotemark": false
+        "quotemark": false,
+		"indent": [true, "tabs"]
     }
 }
