@@ -1,0 +1,11 @@
+{
+    "name": "egofoxlab/chat",
+    "authors": [
+        {
+            "name": "EGOFOXLAB",
+            "email": "egofoxlab@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
