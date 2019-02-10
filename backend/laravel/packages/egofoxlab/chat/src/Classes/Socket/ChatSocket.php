@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Classess\Socket;
+namespace Egofoxlab\Chat\Classes\Socket;
 
-use App\Classes\Socket\Base\BaseSocket;
+use Egofoxlab\Chat\Classes\Socket\Base\BaseSocket;
 use Ratchet\ConnectionInterface;
 
 class ChatSocket extends BaseSocket {

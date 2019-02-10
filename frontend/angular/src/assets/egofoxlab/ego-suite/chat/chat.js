@@ -78,7 +78,7 @@ function EgoChat(options) {
 	 * @param {string} format
 	 */
 	self.setFormat = function (format) {
-		if (!empty(format) && $.inArray(format, [
+		if (!EgoUtil.empty(format) && $.inArray(format, [
 			EgoChat.Format.JSON
 		]) !== -1) {
 			self.format = format;
@@ -213,19 +213,19 @@ function EgoChat(options) {
 	 */
 	function _handleInputOptions() {
 		//	Set `Server URL`
-		if (!empty(options.serverUrl)) {
+		if (!EgoUtil.empty(options.serverUrl)) {
 			self.serverUrl = options.serverUrl;
 		}
 
 		//	Set `Message Format`
-		if (!empty(options.format) && $.inArray(options.format, [
+		if (!EgoUtil.empty(options.format) && $.inArray(options.format, [
 			EgoChat.Format.JSON
 		]) !== -1) {
 			self.format = options.format;
 		}
 
 		//	Set `onClose` listeners
-		if (!empty(options.onClose)) {
+		if (!EgoUtil.empty(options.onClose)) {
 			if (Array.isArray(options.onClose)) {
 				options.onClose.forEach(function (item) {
 					self.setOnClose(item);
@@ -236,7 +236,7 @@ function EgoChat(options) {
 		}
 
 		//	Set `onError` listeners
-		if (!empty(options.onError)) {
+		if (!EgoUtil.empty(options.onError)) {
 			if (Array.isArray(options.onError)) {
 				options.onError.forEach(function (item) {
 					self.setOnError(item);
@@ -247,7 +247,7 @@ function EgoChat(options) {
 		}
 
 		//	Set `onMessage` listeners
-		if (!empty(options.onMessage)) {
+		if (!EgoUtil.empty(options.onMessage)) {
 			if (Array.isArray(options.onMessage)) {
 				options.onMessage.forEach(function (item) {
 					self.setOnMessage(item);
@@ -258,7 +258,7 @@ function EgoChat(options) {
 		}
 
 		//	Set `onOpen` listeners
-		if (!empty(options.onOpen)) {
+		if (!EgoUtil.empty(options.onOpen)) {
 			if (Array.isArray(options.onOpen)) {
 				options.onOpen.forEach(function (item) {
 					self.setOnOpen(item);

@@ -7,6 +7,7 @@
 
 namespace Egofoxlab\Chat;
 
+use Egofoxlab\Chat\Commands\ChatServer;
 use Illuminate\Support\ServiceProvider;
 
 class ChatServiceProvider extends ServiceProvider {
@@ -22,6 +23,9 @@ class ChatServiceProvider extends ServiceProvider {
 			//__DIR__ . '/views' => resource_path('/views/vendor/ego_chat'),
 		]);
 		$this->loadViewsFrom(__DIR__ . '/views', 'ego_chat');
+		$this->commands([
+			ChatServer::class
+		]);
 	}
 
 	/**

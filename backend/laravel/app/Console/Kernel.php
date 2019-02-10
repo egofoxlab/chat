@@ -1,4 +1,9 @@
 <?php
+/**
+ * Developed by EGOFOXLAB.
+ * Site http://egofoxlab.com/
+ * Copyright (c) 2019.
+ */
 
 namespace App\Console;
 
@@ -12,7 +17,7 @@ class Kernel extends ConsoleKernel {
 	 * @var array
 	 */
 	protected $commands = [
-		\App\Console\Commands\ChatServer::class,
+
 	];
 
 	/**

@@ -1,8 +1,14 @@
 <?php
 
-namespace App\Console\Commands;
+/**
+ * Developed by EGOFOXLAB.
+ * Site http://egofoxlab.com/
+ * Copyright (c) 2019.
+ */
 
-use App\Classess\Socket\ChatSocket;
+namespace Egofoxlab\Chat\Commands;
+
+use Egofoxlab\Chat\Classes\Socket\ChatSocket;
 use Illuminate\Console\Command;
 use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
