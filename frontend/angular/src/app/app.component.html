@@ -1,13 +1,19 @@
-<div>
-    <textarea id="chat-input"></textarea>
-</div>
+<main>
+	<app-header></app-header>
 
-<div>
-    <button (click)="eventSend($event)">Send message</button>
-</div>
+	<div>
+		<textarea id="chat-input"></textarea>
+	</div>
 
-<div id="message-container">
+	<div>
+		<button (click)="eventSend($event)">Send message</button>
+	</div>
 
-</div>
+	<div id="message-container">
 
-<router-outlet></router-outlet>
+	</div>
+
+	<router-outlet></router-outlet>
+
+	<app-footer></app-footer>
+</main>

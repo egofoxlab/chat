@@ -4,6 +4,12 @@
  * Copyright (c) 2019.
  */
 
+/**
+ * Need jQuery library
+ *
+ * @constructor
+ */
+
 function EgoUtil() {
 
 }

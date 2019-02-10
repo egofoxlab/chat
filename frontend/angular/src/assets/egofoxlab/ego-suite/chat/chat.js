@@ -64,6 +64,20 @@ function EgoChat(options) {
 	self.onOpen = [];
 
 	/**
+	 * `onBeforeSend` listeners
+	 *
+	 * @type {Array}
+	 */
+	self.onBeforeSend = [];
+
+	/**
+	 * `onAfterSend` listeners
+	 *
+	 * @type {Array}
+	 */
+	self.onAfterSend = [];
+
+	/**
 	 * Set `Server URL`
 	 *
 	 * @param {string} serverUrl
@@ -193,6 +207,60 @@ function EgoChat(options) {
 	};
 	//endregion
 
+	//region `onBeforeSend` listener
+	/**
+	 * Set `onBeforeSend` listener
+	 *
+	 * @param {Function} onBeforeSend
+	 */
+	self.setOnBeforeSend = function (onBeforeSend) {
+		EgoUtil.setListener(self.onBeforeSend, onBeforeSend);
+	};
+
+	/**
+	 * Remove `onBeforeSend` listener by function
+	 *
+	 * @param {Function} onBeforeSend
+	 */
+	self.removeOnBeforeSend = function (onBeforeSend) {
+		removeListener(self.onBeforeSend, onBeforeSend);
+	};
+
+	/**
+	 * Remove all `onBeforeSend` listeners
+	 */
+	self.removeAllOnBeforeSend = function () {
+		self.onBeforeSend = [];
+	};
+	//endregion
+
+	//region `onAfterSend` listener
+	/**
+	 * Set `onAfterSend` listener
+	 *
+	 * @param {Function} onAfterSend
+	 */
+	self.setOnAfterSend = function (onAfterSend) {
+		EgoUtil.setListener(self.onAfterSend, onAfterSend);
+	};
+
+	/**
+	 * Remove `onAfterSend` listener by function
+	 *
+	 * @param {Function} onAfterSend
+	 */
+	self.removeOnAfterSend = function (onAfterSend) {
+		removeListener(self.onAfterSend, onAfterSend);
+	};
+
+	/**
+	 * Remove all `onAfterSend` listeners
+	 */
+	self.removeAllOnAfterSend = function () {
+		self.onAfterSend = [];
+	};
+	//endregion
+
 	//	Handle input options from users
 	_handleInputOptions();
 
@@ -203,6 +271,24 @@ function EgoChat(options) {
 		self.connection.onerror = _onError;
 		self.connection.onmessage = _onMessage;
 		self.connection.onopen = _onOpen;
+	};
+
+	/**
+	 * Send message
+	 *
+	 * @param {String} message
+	 */
+	self.send = function(message) {
+		EgoUtil.eachListener(self.onBeforeSend, function (listener) {
+			listener();
+		});
+
+		console.log(message);
+		self.connection.send(message);
+
+		EgoUtil.eachListener(self.onAfterSend, function (listener) {
+			listener();
+		});
 	};
 
 	//region Auxiliary functions
