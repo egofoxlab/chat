@@ -4,9 +4,23 @@
  * Copyright (c) 2019.
  */
 
+:host {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	display: block;
+	width: 100%;
+	height: var(--footer-height);
+}
+
 .footer {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	display: block;
+	width: 100%;
+	height: var(--footer-height);
 	background-color: #000;
-	padding: 10px;
 
 	address {
 		margin: 0;

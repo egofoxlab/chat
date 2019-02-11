@@ -1,19 +1,23 @@
+<app-header></app-header>
+
 <main>
-	<app-header></app-header>
+	<div class="content">
+		<div class="inner-content">
+			<div>
+				<textarea id="chat-input"></textarea>
+			</div>
 
-	<div>
-		<textarea id="chat-input"></textarea>
+			<div>
+				<button (click)="eventSend($event)">Send message</button>
+			</div>
+
+			<div id="message-container">
+
+			</div>
+
+			<router-outlet></router-outlet>
+		</div>
 	</div>
-
-	<div>
-		<button (click)="eventSend($event)">Send message</button>
-	</div>
-
-	<div id="message-container">
-
-	</div>
-
-	<router-outlet></router-outlet>
 
 	<app-footer></app-footer>
 </main>
