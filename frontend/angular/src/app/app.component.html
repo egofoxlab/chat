@@ -3,15 +3,7 @@
 <main>
 	<div class="content">
 		<div class="inner-content">
-			<div>
-				<textarea id="chat-input"></textarea>
-			</div>
-
-			<div>
-				<button (click)="eventSend($event)">Send message</button>
-			</div>
-
-			<div id="message-container">
+			<div class="messages" #messages>
 
 			</div>
 
@@ -20,6 +12,26 @@
 	</div>
 
 	<div class="footer-container">
+		<div class="form">
+			<div class="input">
+				<div class="wrap">
+					<textarea
+						id="chat-input"
+						rows="3"
+						placeholder="Your message..."
+					></textarea>
+				</div>
+			</div>
+			<div class="send">
+				<button
+					type="button"
+					(click)="eventSend($event)"
+				>
+					SEND
+				</button>
+			</div>
+		</div>
+
 		<app-footer></app-footer>
 	</div>
 </main>

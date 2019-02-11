@@ -22,6 +22,7 @@
 		"@angular/router": "^7.2.4",
 		"@types/jquery": "^3.3.29",
 		"core-js": "^2.6.4",
+		"identicon.js": "^2.3.3",
 		"jquery": "^3.3.1",
 		"rxjs": "^6.4.0",
 		"tslib": "^1.9.0",

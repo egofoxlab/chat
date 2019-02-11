@@ -17,6 +17,12 @@ class ChatSocket extends BaseSocket {
 		$this->clientList->attach($conn);
 
 		echo "New connection" . PHP_EOL;
+
+		foreach ($this->clientList as $item) {
+			$item->send("Greetings!\r\n
+				Welcome to EGOCHAT!
+				");
+		}
 	}
 
 	function onClose(ConnectionInterface $conn) {

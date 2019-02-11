@@ -1,8 +1,18 @@
-import {AfterViewInit, Component, ElementRef, ViewEncapsulation} from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	ComponentFactory,
+	ComponentFactoryResolver,
+	ComponentRef,
+	ElementRef, ViewChild, ViewContainerRef,
+	ViewEncapsulation
+} from '@angular/core';
 import * as $ from 'jquery';
 import {of} from "rxjs";
+import {MessageComponent} from "./message/message.component";
 
 declare let EgoChat;
+declare let Identicon;
 
 @Component({
 	selector: 'app-root',
@@ -13,10 +23,13 @@ declare let EgoChat;
 export class AppComponent implements AfterViewInit {
 	title = 'frontend';
 
+	@ViewChild('messages', {read: ViewContainerRef}) _eMessages;
+
 	private elementRef;
 	private egoChat;
 
-	constructor(private _elementRef: ElementRef) {
+	constructor(private _elementRef: ElementRef,
+				private resolver: ComponentFactoryResolver) {
 		this.elementRef = $(_elementRef.nativeElement);
 	}
 
@@ -32,32 +45,18 @@ export class AppComponent implements AfterViewInit {
 		});
 
 		this.egoChat.init();
+
+
 	}
 
 	private onOpen(e) {
 		console.log('On Open');
-
-		console.log(e);
 	}
 
 	private onMessage(message: MessageEvent) {
 		console.log('On Message');
 
-		console.log(message.data);
-	}
-
-	private addMessage(message: string) {
-		if (EgoUtil.empty(message)) {
-			return;
-		}
-
-		message = message.trim();
-
-		if (message === '') {
-			return;
-		}
-
-		$('#message-container').append(`<div>${message}</div>`);
+		this.addMessage(message.data);
 	}
 
 	public eventSend(e) {
@@ -76,6 +75,38 @@ export class AppComponent implements AfterViewInit {
 		this.egoChat.send(input);
 
 		this.elementRef.find('#chat-input').val('');
+	}
+
+	private addMessage(text: string) {
+		const factory: ComponentFactory<MessageComponent> = this.resolver.resolveComponentFactory(MessageComponent);
+		const componentRef: ComponentRef<MessageComponent> = this._eMessages.createComponent(factory);
+		const component: MessageComponent = componentRef.instance;
+
+		component.fromMe = false;
+		component.text = text;
+		component.date = '02.02.2019';
+		component.avatar = this.generateAvatar();
+	}
+
+	/**
+	 * Generate avatar
+	 */
+	private generateAvatar() {
+		// set up options
+		const hash = "c157a79031e1c40f85931829bc5fc552";  // 15+ hex chars
+		const options = {
+			foreground: [Math.random() * 255, Math.random() * 255, Math.random() * 255, 255],               // rgba black
+			background: [255, 255, 255, 255],         // rgba white
+			margin: 0.25,                              // 20% margin
+			size: 420,                                // 420px square
+			format: 'svg'                             // use SVG instead of PNG
+		};
+
+		// create a base64 encoded SVG
+		const data = new Identicon(hash, options).toString();
+
+		// write to a data URI
+		return 'data:image/svg+xml;base64,' + data;
 	}
 
 }
