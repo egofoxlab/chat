@@ -131,5 +131,15 @@ declare class EgoUtil {
 	 * @returns {boolean}
 	 */
 	public static eachListener(arr, handler): boolean;
-	
+
+	/**
+	 * Pad a string to a certain length with another string
+	 *
+	 * @param input
+	 * @param pad_length
+	 * @param pad_string
+	 * @param pad_type
+	 */
+	public static str_pad(input: string, pad_length: number, pad_string?: string, pad_type?: string): string;
+
 }
