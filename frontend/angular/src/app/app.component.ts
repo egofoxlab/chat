@@ -10,6 +10,8 @@ import {
 import * as $ from 'jquery';
 import {of} from "rxjs";
 import {MessageComponent} from "./message/message.component";
+import {IUserInfo} from "./interfaces/user-info.interface";
+import {IMessageItem} from "./interfaces/message-item.interface";
 
 declare let EgoChat;
 declare let Identicon;
@@ -21,12 +23,20 @@ declare let Identicon;
 	encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements AfterViewInit {
-	title = 'frontend';
 
+	title = 'EGO Chat';
+
+	//	Messages container
 	@ViewChild('messages', {read: ViewContainerRef}) _eMessages;
 
+	//	Root element of component
 	private elementRef;
+
+	//	Chat instance
 	private egoChat;
+
+	//	Current user info
+	private userInfo: IUserInfo;
 
 	constructor(private _elementRef: ElementRef,
 				private resolver: ComponentFactoryResolver) {
@@ -34,9 +44,26 @@ export class AppComponent implements AfterViewInit {
 	}
 
 	ngAfterViewInit(): void {
+		this.initUser();
 		this.initChat();
 	}
 
+	/**
+	 * Init user info
+	 */
+	private initUser() {
+		this.userInfo = new IUserInfo();
+		//	Mock user ID 'cause it's dome and use single chat like one private
+		this.userInfo.id = (new Date()).getTime();
+		//	User name
+		this.userInfo.name = `User ${this.userInfo.id}`;
+		//	User avatar
+		this.userInfo.avatar = this.generateAvatar();
+	}
+
+	/**
+	 * Init chat
+	 */
 	private initChat() {
 		this.egoChat = new EgoChat({
 			serverUrl: 'ws://localhost:7000',
@@ -45,47 +72,95 @@ export class AppComponent implements AfterViewInit {
 		});
 
 		this.egoChat.init();
-
-
 	}
 
+	/**
+	 * Listener of open connection
+	 *
+	 * @param e
+	 */
 	private onOpen(e) {
 		console.log('On Open');
 	}
 
+	/**
+	 * Listener on coming message
+	 *
+	 * @param message
+	 */
 	private onMessage(message: MessageEvent) {
-		console.log('On Message');
+		let messageItem;
 
-		this.addMessage(message.data);
-	}
-
-	public eventSend(e) {
-		let input = this.elementRef.find('#chat-input').val();
-
-		if (EgoUtil.empty(input)) {
-			alert('Fill input field!');
+		//	Parse input message data
+		try {
+			const messageData = JSON.parse(message.data);
+			messageItem = new IMessageItem();
+			messageItem.userInfo = {
+				id: parseInt(messageData.userInfo.id, 10),
+				name: messageData.userInfo.name,
+				avatar: messageData.userInfo.avatar
+			};
+			messageItem.data = {
+				text: messageData.data.text
+			};
+		} catch (ex) {
+			console.warn(`Can't parse input incoming message.`);
 		}
 
+		//	Check empty message item
+		if (EgoUtil.empty(messageItem)) {
+			return;
+		}
+
+		this.addMessage(messageItem);
+	}
+
+	/**
+	 * Send message to chat
+	 *
+	 * @param e
+	 */
+	public eventSend(e) {
+		let input = this.elementRef.find('#chat-input').val();
+		input = EgoUtil.empty(input) ? '' : input;
 		input = input.trim();
 
 		if (input === '') {
 			alert('Fill input field!');
+
+			return;
 		}
 
-		this.egoChat.send(input);
+		//	Send JSON message
+		this.egoChat.send(JSON.stringify({
+			userInfo: {
+				id: this.userInfo.id,
+				name: this.userInfo.name,
+				avatar: this.userInfo.avatar
+			},
+			data: {
+				text: input
+			}
+		}));
 
 		this.elementRef.find('#chat-input').val('');
 	}
 
-	private addMessage(text: string) {
+	/**
+	 * Add message to chat
+	 *
+	 * @param message
+	 */
+	private addMessage(message: IMessageItem) {
 		const factory: ComponentFactory<MessageComponent> = this.resolver.resolveComponentFactory(MessageComponent);
 		const componentRef: ComponentRef<MessageComponent> = this._eMessages.createComponent(factory);
 		const component: MessageComponent = componentRef.instance;
 
-		component.fromMe = false;
-		component.text = text;
+		component.fromMe = this.userInfo.id === message.userInfo.id;
+		component.name = message.userInfo.name;
+		component.text = message.data.text;
 		component.date = '02.02.2019';
-		component.avatar = this.generateAvatar();
+		component.avatar = message.userInfo.avatar;
 	}
 
 	/**

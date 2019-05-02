@@ -45,11 +45,19 @@ class ChatSocket extends BaseSocket {
 	}
 
 	function onMessage(ConnectionInterface $from, $msg) {
+		$messageData = json_decode($msg, true);
+
+		//  Do something with message for example check empty message, filter message etc.
+		if (empty($messageData)) {
+			return;
+		}
+
 		foreach ($this->clientList as $item) {
 			/** @var ConnectionInterface $client */
 			$client = $item;
 
-			$client->send("Hey! Message from someone! `{$msg}`");
+			//$client->send("Hey! Message from someone! `{$msg}`");
+			$client->send($msg);
 		}
 	}
 

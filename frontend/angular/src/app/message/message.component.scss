@@ -5,6 +5,8 @@
  */
 
 .message {
+	padding-bottom: 10px;
+
 	&.from-me {
 		.wrap {
 			margin-right: 0;
@@ -29,6 +31,21 @@
 		display: flex;
 		max-width: 400px;
 		min-width: 200px;
+		flex-wrap: wrap;
+
+		.name {
+			width: 100%;
+			margin-bottom: 5px;
+			padding-right: 20px;
+			font-size: 14px;
+			text-align: right;
+
+			&.from-me {
+				padding-right: 0;
+				padding-left: 20px;
+				text-align: left;
+			}
+		}
 
 		.avatar {
 			width: 50px;

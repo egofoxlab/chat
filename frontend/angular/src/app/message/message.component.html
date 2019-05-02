@@ -3,7 +3,16 @@
 	[ngClass]="{'from-me': fromMe}"
 >
 	<div class="wrap">
-		<div class="avatar">
+		<div
+			class="name"
+			[ngClass]="{'from-me': fromMe}"
+		>
+			{{name}}
+		</div>
+		<div
+			*ngIf="!fromMe"
+			class="avatar"
+		>
 			<div></div>
 		</div>
 		<div class="content">
@@ -14,7 +23,10 @@
 				{{date}}
 			</div>
 		</div>
-		<div class="avatar">
+		<div
+			*ngIf="fromMe"
+			class="avatar"
+		>
 			<div></div>
 		</div>
 	</div>

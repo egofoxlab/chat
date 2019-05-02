@@ -23,6 +23,11 @@ export class MessageComponent implements AfterViewInit {
 	public fromMe = false;
 
 	/**
+	 * User name
+	 */
+	public name: string;
+
+	/**
 	 * Message text
 	 */
 	public text: string;

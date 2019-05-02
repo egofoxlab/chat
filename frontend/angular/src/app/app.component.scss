@@ -38,6 +38,7 @@ html {
 				bottom: 0;
 				display: block;
 				width: 100%;
+				height: var(--footer-height);
 				background-color: #94b5c2;
 
 				.form {
@@ -81,6 +82,7 @@ html {
 							border: none;
 							outline: none;
 							background-color: #50ab33;
+							box-shadow: 0 5px 12px #50ab3391;
 							color: #fff;
 							font-size: 18px;
 							text-shadow: none;
@@ -101,5 +103,29 @@ html {
 
 :root {
 	--header-height: 85px;
-	--footer-height: 50px;
+	--footer-height: 180px;
+}
+
+@media (max-width: 600px) {
+	html {
+		body {
+			main {
+				.footer-container {
+					.form {
+						flex-direction: column;
+						align-items: center;
+						justify-content: center;
+
+						.input {
+							width: 100%;
+						}
+
+						.send {
+							padding-top: 0;
+						}
+					}
+				}
+			}
+		}
+	}
 }
