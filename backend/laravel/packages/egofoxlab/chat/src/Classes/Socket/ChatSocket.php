@@ -16,6 +16,18 @@ class ChatSocket extends BaseSocket {
 	function onOpen(ConnectionInterface $conn) {
 		$this->clientList->attach($conn);
 
+		$conn->send(json_encode([
+			'type' => 'system',
+			'userInfo' => [
+				'id' => null,
+				'name' => 'Administrator',
+				'avatar' => null
+			],
+			'data' => [
+				'text' => 'Welcome to EGO Chat demo!'
+			]
+		]));
+
 		echo "New connection" . PHP_EOL;
 
 		foreach ($this->clientList as $item) {

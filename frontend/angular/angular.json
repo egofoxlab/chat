@@ -31,7 +31,7 @@
                         ],
                         "scripts": [
                             "./node_modules/jquery/dist/jquery.min.js",
-                            "./src/assets/egofoxlab/utils.js",
+							"./node_modules/@egofoxlab/util/utils.js",
 							"./src/assets/egofoxlab/ego-suite/chat/chat.js",
 							"./node_modules/identicon.js/identicon.js"
                         ]

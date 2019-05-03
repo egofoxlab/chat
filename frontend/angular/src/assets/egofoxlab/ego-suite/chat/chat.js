@@ -283,7 +283,6 @@ function EgoChat(options) {
 			listener();
 		});
 
-		console.log(message);
 		self.connection.send(message);
 
 		EgoUtil.eachListener(self.onAfterSend, function (listener) {

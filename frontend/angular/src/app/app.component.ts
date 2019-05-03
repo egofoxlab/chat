@@ -4,14 +4,16 @@ import {
 	ComponentFactory,
 	ComponentFactoryResolver,
 	ComponentRef,
-	ElementRef, ViewChild, ViewContainerRef,
+	ElementRef,
+	ViewChild,
+	ViewContainerRef,
 	ViewEncapsulation
 } from '@angular/core';
 import * as $ from 'jquery';
-import {of} from "rxjs";
 import {MessageComponent} from "./message/message.component";
 import {IUserInfo} from "./interfaces/user-info.interface";
 import {IMessageItem} from "./interfaces/message-item.interface";
+import * as EgoUtil from "@egofoxlab/util";
 
 declare let EgoChat;
 declare let Identicon;
@@ -77,10 +79,17 @@ export class AppComponent implements AfterViewInit {
 	/**
 	 * Listener of open connection
 	 *
-	 * @param e
+	 * @param message
 	 */
-	private onOpen(e) {
-		console.log('On Open');
+	private onOpen(message: MessageEvent) {
+		const messageItem = this.parseInputMessage(message.data);
+
+		//	Check empty message item
+		if (EgoUtil.empty(messageItem)) {
+			return;
+		}
+
+		this.addMessage(messageItem);
 	}
 
 	/**
@@ -89,23 +98,7 @@ export class AppComponent implements AfterViewInit {
 	 * @param message
 	 */
 	private onMessage(message: MessageEvent) {
-		let messageItem;
-
-		//	Parse input message data
-		try {
-			const messageData = JSON.parse(message.data);
-			messageItem = new IMessageItem();
-			messageItem.userInfo = {
-				id: parseInt(messageData.userInfo.id, 10),
-				name: messageData.userInfo.name,
-				avatar: messageData.userInfo.avatar
-			};
-			messageItem.data = {
-				text: messageData.data.text
-			};
-		} catch (ex) {
-			console.warn(`Can't parse input incoming message.`);
-		}
+		const messageItem = this.parseInputMessage(message.data);
 
 		//	Check empty message item
 		if (EgoUtil.empty(messageItem)) {
@@ -161,6 +154,49 @@ export class AppComponent implements AfterViewInit {
 		component.text = message.data.text;
 		component.date = '02.02.2019';
 		component.avatar = message.userInfo.avatar;
+	}
+
+	/**
+	 * Parse input message
+	 *
+	 * @param data
+	 */
+	private parseInputMessage(data: string): IMessageItem|null {
+		let messageItem;
+
+		//	Parse input message data
+		try {
+			const messageData = JSON.parse(data);
+			messageItem = new IMessageItem();
+
+			messageItem.userInfo = {
+				id: parseInt(messageData.userInfo.id, 10),
+				name: messageData.userInfo.name,
+				avatar: messageData.userInfo.avatar
+			};
+
+			//	Check message type
+			switch (messageData.type) {
+				//	Generate avatar for system message
+				case 'system':
+					messageItem.userInfo.avatar = this.generateAvatar();
+
+					break;
+			}
+
+			messageItem.data = {
+				text: messageData.data.text
+			};
+		} catch (ex) {
+			console.warn(`Can't parse input incoming message.`);
+		}
+
+		//	Check empty message item
+		if (EgoUtil.empty(messageItem)) {
+			return null;
+		}
+
+		return messageItem;
 	}
 
 	/**
