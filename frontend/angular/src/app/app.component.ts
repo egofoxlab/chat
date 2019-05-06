@@ -14,8 +14,8 @@ import {MessageComponent} from "./message/message.component";
 import {IUserInfo} from "./interfaces/user-info.interface";
 import {IMessageItem} from "./interfaces/message-item.interface";
 import * as EgoUtil from "@egofoxlab/util";
+import {Chat} from "@egofoxlab/chat";
 
-declare let EgoChat;
 declare let Identicon;
 
 @Component({
@@ -35,7 +35,7 @@ export class AppComponent implements AfterViewInit {
 	private elementRef;
 
 	//	Chat instance
-	private egoChat;
+	private egoChat: Chat;
 
 	//	Current user info
 	private userInfo: IUserInfo;
@@ -67,7 +67,7 @@ export class AppComponent implements AfterViewInit {
 	 * Init chat
 	 */
 	private initChat() {
-		this.egoChat = new EgoChat({
+		this.egoChat = new Chat({
 			serverUrl: 'ws://localhost:7000',
 			onOpen: [this.onOpen.bind(this)],
 			onMessage: [this.onMessage.bind(this)]
