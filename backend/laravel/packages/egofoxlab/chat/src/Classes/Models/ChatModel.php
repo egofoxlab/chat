@@ -130,11 +130,11 @@ class ChatModel extends Model {
 	/**
 	 * Return chat by code
 	 *
-	 * @param string $name
+	 * @param string $code
 	 * @param bool $isStruct
-	 * @return array|ChatRowStruct|null|object
+	 * @return array|ChatRowStruct
 	 */
-	public function getOneByCode(string $name, bool $fullMatch = false, bool $isStruct = false) {
+	public function getOneByCode(string $code, bool $isStruct = false) {
 		$sql = "
 			SELECT
 			
@@ -146,11 +146,11 @@ class ChatModel extends Model {
 			
 			FROM chat c
 			WHERE 1
-				  AND c.c_name = '{$name}'
+				  AND c.c_code = '{$code}'
 			";
 
 		$data = DB::select($sql);
-		$data = empty($data) ? null : (array)$data[0];
+		$data = empty($data) ? [] : (array)$data[0];
 
 		if (empty($data)) {
 			return $data;

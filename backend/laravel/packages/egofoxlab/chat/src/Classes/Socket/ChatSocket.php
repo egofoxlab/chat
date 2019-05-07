@@ -2,10 +2,14 @@
 
 namespace Egofoxlab\Chat\Classes\Socket;
 
+use Egofoxlab\Chat\Classes\Models\ChatModel;
+use Egofoxlab\Chat\Classes\Models\ChatUserModel;
 use Egofoxlab\Chat\Classes\Providers\ChatProvider;
 use Egofoxlab\Chat\Classes\Socket\Base\BaseSocket;
 use Egofoxlab\Chat\Classes\Struct\ChatRowStruct;
+use Log;
 use Ratchet\ConnectionInterface;
+use Egofoxlab\Chat\Classes\Providers\Util as EgoUtil;
 
 class ChatSocket extends BaseSocket {
 
@@ -17,6 +21,23 @@ class ChatSocket extends BaseSocket {
 
 	function onOpen(ConnectionInterface $conn) {
 		$this->clientList->attach($conn);
+
+		//  Create new chat
+		$chatModel = new ChatModel();
+		$chatProvider = new ChatProvider();
+		//  Get chat by code
+		$chat = $chatModel->getOneByCode(md5('1'), true);
+
+		//  Create chat if not exists
+		if (empty($chat)) {
+			$chat = $chatProvider->createChat(
+				(new ChatRowStruct())
+					->setCode(md5('1'))
+					->setName('chat_name_' . time()),
+				//  Mock users
+				[]
+			);
+		}
 
 		$conn->send(json_encode([
 			'type' => 'system',
@@ -62,6 +83,24 @@ class ChatSocket extends BaseSocket {
 		//  Do something with message for example check empty message, filter message etc.
 		if (empty($messageData)) {
 			return;
+		}
+
+		$userId = (int)EgoUtil::getArrItem($messageData, 'userInfo.id');
+
+		if ($userId > 0) {
+			$chatModel = new ChatModel();
+			$chatUserModel = new ChatUserModel();
+			$chatProvider = new ChatProvider();
+			$chat = $chatModel->getOneByCode(md5(EgoUtil::getArrItem($messageData, 'data.chatId')), true);
+			$chatUsers = $chatUserModel->getChatUsers($chat->getId());
+
+			//  Add user to chat if not exist yet
+			if (!in_array($userId, $chatUsers)) {
+				$chatProvider->addUserToChat($chat->getId(), $userId);
+			}
+
+			//  Save message in DB
+			$chatProvider->newMessage($chat->getId(), $userId, EgoUtil::getArrItem($messageData, 'data.text'));
 		}
 
 		foreach ($this->clientList as $item) {

@@ -121,7 +121,7 @@ class ChatProvider {
 			$data[] = $item;
 		}
 
-		usort($data, function ($a, $b) use ($user){
+		usort($data, function ($a, $b) use ($user) {
 			foreach ($a['userList'] as $item) {
 				if ((int)$item['user_id'] === $user && (int)$item['unreadCount'] > 0) {
 
@@ -179,9 +179,6 @@ class ChatProvider {
 			$chatUserModel = new ChatUserModel();
 			//endregion
 
-			//  Chat Name
-			$message = EgoUtil::getArrItem($transferData, 'message', '');
-
 			$chatMessageRow = (new ChatMessageRowStruct())
 				->setChatId($chatId)
 				->setUserId($userId)
@@ -195,15 +192,51 @@ class ChatProvider {
 			}
 
 			//  Update last view date chat by this user
-			if (!$chatUserModel->updateLastViewDate($chatId, $userId)) {
-				throw new \RuntimeException('Error occurred while update last view date.');
-			}
+			$chatUserModel->updateLastViewDate($chatId, $userId);
 
 			DB::commit();
 		} catch (\Exception $ex) {
 			DB::rollBack();
 
 			throw new \RuntimeException($ex->getMessage());
+		}
+	}
+
+	/**
+	 * Add user to chat
+	 *
+	 * @param int $chatId - Chat ID
+	 * @param int $userId - User ID
+	 * @throws \InvalidArgumentException
+	 * @throws \RuntimeException
+	 */
+	public function addUserToChat($chatId, $userId) {
+		//  Chat ID
+		$chatId = (int)$chatId;
+
+		if ($chatId <= 0) {
+			throw new \InvalidArgumentException('Invalid chat ID.');
+		}
+
+		//  User ID
+		$userId = (int)$userId;
+
+		if ($userId <= 0) {
+			throw new \InvalidArgumentException('Invalid user ID.');
+		}
+
+		//region Define Models
+		$chatUserModel = new ChatUserModel();
+		//endregion
+
+		$result = (int)$chatUserModel->create(
+			(new ChatUserRowStruct())
+				->setChatId($chatId)
+				->setUserId($userId)
+		);
+
+		if ($result <= 0) {
+			throw new \RuntimeException('Error occurred while add user to chat.');
 		}
 	}
 
