@@ -56,7 +56,7 @@ export class AppComponent implements AfterViewInit {
 	private initUser() {
 		this.userInfo = new IUserInfo();
 		//	Mock user ID 'cause it's dome and use single chat like one private
-		this.userInfo.id = (new Date()).getTime();
+		this.userInfo.id = Math.floor((new Date()).getTime() / 100000);
 		//	User name
 		this.userInfo.name = `User ${this.userInfo.id}`;
 		//	User avatar
@@ -132,6 +132,7 @@ export class AppComponent implements AfterViewInit {
 				avatar: this.userInfo.avatar
 			},
 			data: {
+				chatId: 1,
 				text: input
 			}
 		}));
