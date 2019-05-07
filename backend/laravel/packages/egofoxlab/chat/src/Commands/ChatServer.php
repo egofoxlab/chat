@@ -8,7 +8,9 @@
 
 namespace Egofoxlab\Chat\Commands;
 
+use Egofoxlab\Chat\Classes\Providers\ChatProvider;
 use Egofoxlab\Chat\Classes\Socket\ChatSocket;
+use Egofoxlab\Chat\Classes\Struct\ChatRowStruct;
 use Illuminate\Console\Command;
 use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
@@ -45,6 +47,18 @@ class ChatServer extends Command {
 	 */
 	public function handle() {
 		$this->info("Start `Chat Server`...");
+
+		//  Create new chat
+		$chatProvider = new ChatProvider();
+		$chatProvider->createChat(
+			(new ChatRowStruct())
+				->setCode('chat_code_' . time())
+				->setName('chat_name_' . time()),
+			[
+				33,
+				99
+			]
+		);
 
 		$server = IoServer::factory(
 			new HttpServer(

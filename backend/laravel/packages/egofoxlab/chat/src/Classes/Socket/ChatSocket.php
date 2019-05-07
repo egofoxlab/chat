@@ -2,7 +2,9 @@
 
 namespace Egofoxlab\Chat\Classes\Socket;
 
+use Egofoxlab\Chat\Classes\Providers\ChatProvider;
 use Egofoxlab\Chat\Classes\Socket\Base\BaseSocket;
+use Egofoxlab\Chat\Classes\Struct\ChatRowStruct;
 use Ratchet\ConnectionInterface;
 
 class ChatSocket extends BaseSocket {
@@ -27,8 +29,6 @@ class ChatSocket extends BaseSocket {
 				'text' => 'Welcome to EGO Chat demo!'
 			]
 		]));
-
-		echo "New connection" . PHP_EOL;
 
 		foreach ($this->clientList as $item) {
 			$item->send("Greetings!\r\n
