@@ -40,6 +40,9 @@ export class AppComponent implements AfterViewInit {
 	//	Current user info
 	private userInfo: IUserInfo;
 
+	//	Chat users
+	private users: any = {};
+
 	constructor(private _elementRef: ElementRef,
 				private resolver: ComponentFactoryResolver) {
 		this.elementRef = $(_elementRef.nativeElement);
@@ -82,14 +85,7 @@ export class AppComponent implements AfterViewInit {
 	 * @param message
 	 */
 	private onOpen(message: MessageEvent) {
-		const messageItem = this.parseInputMessage(message.data);
 
-		//	Check empty message item
-		if (EgoUtil.empty(messageItem)) {
-			return;
-		}
-
-		this.addMessage(messageItem);
 	}
 
 	/**
@@ -104,6 +100,19 @@ export class AppComponent implements AfterViewInit {
 		if (EgoUtil.empty(messageItem)) {
 			return;
 		}
+
+		//	Parse old message(history)
+		EgoUtil.getArrItem(messageItem.data, 'oldMessages', []).forEach((oldMessage) => {
+			const oldMessageItem = this.parseInputMessage(oldMessage);
+			console.log(oldMessageItem);
+
+			//	Skip empty messages
+			if (EgoUtil.empty(oldMessageItem)) {
+				return;
+			}
+
+			this.addMessage(oldMessageItem);
+		});
 
 		this.addMessage(messageItem);
 	}
@@ -162,19 +171,37 @@ export class AppComponent implements AfterViewInit {
 	 *
 	 * @param data
 	 */
-	private parseInputMessage(data: string): IMessageItem|null {
+	private parseInputMessage(data: any): IMessageItem|null {
 		let messageItem;
+		let messageData;
 
 		//	Parse input message data
 		try {
-			const messageData = JSON.parse(data);
-			messageItem = new IMessageItem();
+			if (typeof data === 'string') {
+				messageData = JSON.parse(data);
+			} else if (typeof data === 'object') {
+				messageData = data;
+			} else {
+				throw new Error('Invalid message data.');
+			}
 
+			messageItem = new IMessageItem();
 			messageItem.userInfo = {
 				id: parseInt(messageData.userInfo.id, 10),
 				name: messageData.userInfo.name,
-				avatar: messageData.userInfo.avatar
+				avatar: EgoUtil.empty(messageData.userInfo.avatar) ? this.generateAvatar() : messageData.userInfo.avatar
 			};
+			//console.log(messageItem);
+
+			//	Check saved users
+			if (messageItem.userInfo.id > 0) {
+				if (EgoUtil.empty(this.users[messageItem.userInfo.id])) {
+					//	Save user
+					this.users[messageItem.userInfo.id] = messageItem.userInfo;
+				} else {
+					messageItem.userInfo.avatar = this.users[messageItem.userInfo.id].avatar;
+				}
+			}
 
 			//	Check message type
 			switch (messageData.type) {
@@ -186,10 +213,13 @@ export class AppComponent implements AfterViewInit {
 			}
 
 			messageItem.data = {
-				text: messageData.data.text
+				text: messageData.data.text,
+				...messageData.data
 			};
 		} catch (ex) {
-			console.warn(`Can't parse input incoming message.`);
+			console.warn(ex.message);
+
+			return null;
 		}
 
 		//	Check empty message item

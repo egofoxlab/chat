@@ -27,6 +27,8 @@ class ChatSocket extends BaseSocket {
 		$chatProvider = new ChatProvider();
 		//  Get chat by code
 		$chat = $chatModel->getOneByCode(md5('1'), true);
+		//  Old messages
+		$oldMessages = [];
 
 		//  Create chat if not exists
 		if (empty($chat)) {
@@ -39,6 +41,22 @@ class ChatSocket extends BaseSocket {
 			);
 		}
 
+		if (!empty($chat)) {
+			//  Load old messages
+			foreach ($chatProvider->loadMessages($chat->getId()) as $message) {
+				$oldMessages[] = [
+					'userInfo' => [
+						'id' => $message->getUserId(),
+						'name' => 'User ' . $message->getUserId(),
+						'avatar' => null
+					],
+					'data' => [
+						'text' => $message->getMessage()
+					]
+				];
+			}
+		}
+
 		$conn->send(json_encode([
 			'type' => 'system',
 			'userInfo' => [
@@ -47,7 +65,8 @@ class ChatSocket extends BaseSocket {
 				'avatar' => null
 			],
 			'data' => [
-				'text' => 'Welcome to EGO Chat demo!'
+				'text' => 'Welcome to EGO Chat demo!',
+				'oldMessages' => $oldMessages
 			]
 		]));
 

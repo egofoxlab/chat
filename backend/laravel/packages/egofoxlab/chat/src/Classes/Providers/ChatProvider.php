@@ -75,6 +75,7 @@ class ChatProvider {
 	 *
 	 * @param $user
 	 * @return array
+	 * @throws \InvalidArgumentException
 	 */
 	public function getChatListByUser($user) {
 		//  User ID
@@ -238,6 +239,35 @@ class ChatProvider {
 		if ($result <= 0) {
 			throw new \RuntimeException('Error occurred while add user to chat.');
 		}
+	}
+
+	/**
+	 * Load message
+	 * @todo: Add limit FROM, TO. Behaviour like in Skype
+	 *
+	 * @param int $chatId - Chat ID
+	 * @return array|ChatMessageRowStruct[]|object|null
+	 * @throws \InvalidArgumentException
+	 */
+	public function loadMessages($chatId) {
+		//  Chat ID
+		$chatId = (int)$chatId;
+
+		if ($chatId <= 0) {
+			throw new \InvalidArgumentException('Invalid chat ID.');
+		}
+
+		//region Define Models
+		$chatMessageModel = new ChatMessageModel();
+		//endregion
+
+		$messages = $chatMessageModel->getList($chatId, null, true);
+
+		if (empty($messages)) {
+			return [];
+		}
+
+		return $messages;
 	}
 
 }
