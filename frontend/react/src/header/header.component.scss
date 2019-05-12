@@ -1,0 +1,56 @@
+/*!
+ * Developed by EGOFOXLAB.
+ * Site http://egofoxlab.com/
+ * Copyright (c) 2019.
+ */
+
+.header {
+	position: fixed;
+	left: 0;
+	top: 0;
+	display: flex;
+	width: 100%;
+	height: var(--header-height);
+	background-color: #94b5c2;
+	box-shadow: 0 2px 24px 0 rgba(121, 121, 121, 0.45);
+	z-index: 99999;
+
+	.logo {
+		display: inline-flex;
+		width: 250px;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+
+		.image {
+			display: inline-block;
+			width: 88px;
+			height: 60px;
+			border-radius: 100%;
+
+			div {
+				width: 100%;
+				height: 100%;
+				background-repeat: no-repeat;
+				background-size: contain;
+				background-position: center;
+			}
+			img {
+				width: 100%
+			}
+		}
+
+		span {
+			font-size: 20px;
+			color: #fff;
+		}
+	}
+
+	.chat-name {
+		display: inline-flex;
+		flex-grow: 1;
+		align-items: center;
+		justify-content: center;
+		color: #fff;
+	}
+}

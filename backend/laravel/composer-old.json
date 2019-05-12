@@ -29,10 +29,18 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
+    "extra": {
+        "laravel": {
+            "dont-discover": [],
+            "providers": [
+                "Egofoxlab\\Chat\\ChatServiceProvider"
+            ]
+        }
+    },
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Egofoxlab\\LaravelChat\\": "packages/egofoxlab/laravel-chat"
+            "Egofoxlab\\Chat\\": "packages/egofoxlab/chat/src/"
         },
         "classmap": [
             "database/seeds",
