@@ -51,7 +51,8 @@ class ChatSocket extends BaseSocket {
 						'avatar' => null
 					],
 					'data' => [
-						'text' => $message->getMessage()
+						'text' => $message->getMessage(),
+						'date' => date('d.m.Y', strtotime($message->getDateCreate()))
 					]
 				];
 			}
@@ -66,6 +67,7 @@ class ChatSocket extends BaseSocket {
 			],
 			'data' => [
 				'text' => 'Welcome to EGO Chat demo!',
+				'date' => date('d.m.Y'),
 				'oldMessages' => $oldMessages
 			]
 		]));
@@ -121,6 +123,9 @@ class ChatSocket extends BaseSocket {
 			//  Save message in DB
 			$chatProvider->newMessage($chat->getId(), $userId, EgoUtil::getArrItem($messageData, 'data.text'));
 		}
+
+		//  Modify message
+		$messageData['data']['date'] = date('d.m.Y');
 
 		foreach ($this->clientList as $item) {
 			/** @var ConnectionInterface $client */

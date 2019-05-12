@@ -10,6 +10,7 @@
     "@types/node": "12.0.0",
     "@types/react": "16.8.17",
     "@types/react-dom": "16.8.4",
+    "identicon.js": "^2.3.3",
     "jquery": "^3.4.1",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
