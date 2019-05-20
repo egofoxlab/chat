@@ -12,7 +12,5 @@
 */
 
 Route::get('/', function () {
-	var_dump(class_exists(Egofoxlab\LaravelChat\ChatServiceProvider::class));
-	die();
     return view('welcome');
 });
