@@ -104,9 +104,7 @@ export default class MessageComponent extends React.Component<IMessageProps> {
                             null
                     }
                     <div className="content">
-                        <div className="text">
-                            {this.text}
-                        </div>
+                        <div className="text">{this.text}</div>
                         <div className="info">
                             {this.date}
                         </div>
