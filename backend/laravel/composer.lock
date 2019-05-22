@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e515df992ac0e9c943167e746caf66e4",
+    "content-hash": "015c0b724d2b1b90b0d8e47f227341f5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -805,6 +805,53 @@
                 "schedule"
             ],
             "time": "2019-03-31T00:38:28+00:00"
+        },
+        {
+            "name": "egofoxlab/laravel-chat",
+            "version": "0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/egofoxlab/laravel-chat.git",
+                "reference": "f8cdd8a2684d85574884cd68b1d25c07482bb795"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/egofoxlab/laravel-chat/zipball/f8cdd8a2684d85574884cd68b1d25c07482bb795",
+                "reference": "f8cdd8a2684d85574884cd68b1d25c07482bb795",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^5.5",
+                "php": ">=7"
+            },
+            "require-dev": {
+                "laravel/framework": "^5.5",
+                "php": ">=7"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Egofoxlab\\LaravelChat\\ChatServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Egofoxlab\\LaravelChat\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "EGOFOXLAB",
+                    "email": "egofoxlab@gmail.com"
+                }
+            ],
+            "time": "2019-05-22T20:29:00+00:00"
         },
         {
             "name": "egulias/email-validator",

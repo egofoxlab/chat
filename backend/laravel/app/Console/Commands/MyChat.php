@@ -1,42 +1,32 @@
 <?php
 
-/**
- * Developed by EGOFOXLAB.
- * Site http://egofoxlab.com/
- * Copyright (c) 2019.
- */
-
-namespace Egofoxlab\LaravelChat\Commands;
+namespace App\Console\Commands;
 
 use Egofoxlab\LaravelChat\Classes\Socket\ChatSocket;
-use Illuminate\Console\Command;
 use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
 
-class ChatServer extends Command {
+class MyChat extends \Egofoxlab\LaravelChat\Commands\ChatServer {
+
 	/**
 	 * The name and signature of the console command.
 	 *
 	 * @var string
 	 */
-	protected $signature = 'chat_server:serve';
+	protected $signature = 'my_chat:serve';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Run chat server.';
+	protected $description = 'My Chat';
 
 	/**
-	 * Create a new command instance.
-	 *
-	 * @return void
+	 * Your custom port for chat for default using 7000
 	 */
-	public function __construct() {
-		parent::__construct();
-	}
+	//protected $port = 8000;
 
 	/**
 	 * Execute the console command.
@@ -46,7 +36,7 @@ class ChatServer extends Command {
 	 * @throws \UnexpectedValueException
 	 */
 	public function handle() {
-		$this->info("Start `Chat Server`...");
+		$this->info("Start `My Chat Server` on port {$this->port}...");
 
 		$server = IoServer::factory(
 			new HttpServer(
@@ -54,7 +44,7 @@ class ChatServer extends Command {
 					new ChatSocket()
 				)
 			),
-			7000
+			$this->port
 		);
 
 		$server->run();
