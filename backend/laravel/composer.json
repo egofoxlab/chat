@@ -12,7 +12,7 @@
         "barryvdh/laravel-cors": "^0.11.2",
         "barryvdh/laravel-ide-helper": "^2.5",
         "cboden/ratchet": "^0.4.1",
-        "egofoxlab/laravel-chat": "^0.0.3",
+        "egofoxlab/laravel-chat": "0.0.4",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0"

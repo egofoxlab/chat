@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "015c0b724d2b1b90b0d8e47f227341f5",
+    "content-hash": "72942482583e2391e318932ab0601456",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -808,19 +808,20 @@
         },
         {
             "name": "egofoxlab/laravel-chat",
-            "version": "0.0.3",
+            "version": "0.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egofoxlab/laravel-chat.git",
-                "reference": "f8cdd8a2684d85574884cd68b1d25c07482bb795"
+                "reference": "2f6e681965376aadf0018f5328ba99ae3699c348"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egofoxlab/laravel-chat/zipball/f8cdd8a2684d85574884cd68b1d25c07482bb795",
-                "reference": "f8cdd8a2684d85574884cd68b1d25c07482bb795",
+                "url": "https://api.github.com/repos/egofoxlab/laravel-chat/zipball/2f6e681965376aadf0018f5328ba99ae3699c348",
+                "reference": "2f6e681965376aadf0018f5328ba99ae3699c348",
                 "shasum": ""
             },
             "require": {
+                "cboden/ratchet": "^0.4.1",
                 "laravel/framework": "^5.5",
                 "php": ">=7"
             },
@@ -851,20 +852,20 @@
                     "email": "egofoxlab@gmail.com"
                 }
             ],
-            "time": "2019-05-22T20:29:00+00:00"
+            "time": "2019-05-22T21:07:17+00:00"
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.7",
+            "version": "2.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "709f21f92707308cdf8f9bcfa1af4cb26586521e"
+                "reference": "c26463ff9241f27907112fbcd0c86fa670cfef98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/709f21f92707308cdf8f9bcfa1af4cb26586521e",
-                "reference": "709f21f92707308cdf8f9bcfa1af4cb26586521e",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/c26463ff9241f27907112fbcd0c86fa670cfef98",
+                "reference": "c26463ff9241f27907112fbcd0c86fa670cfef98",
                 "shasum": ""
             },
             "require": {
@@ -908,7 +909,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2018-12-04T22:38:24+00:00"
+            "time": "2019-05-16T22:02:54+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -1715,32 +1716,29 @@
         },
         {
             "name": "lcobucci/jwt",
-            "version": "3.2.5",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lcobucci/jwt.git",
-                "reference": "82be04b4753f8b7693b62852b7eab30f97524f9b"
+                "reference": "8866a58fa866f6872f2a6ea0e04ad56480f0f440"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/82be04b4753f8b7693b62852b7eab30f97524f9b",
-                "reference": "82be04b4753f8b7693b62852b7eab30f97524f9b",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/8866a58fa866f6872f2a6ea0e04ad56480f0f440",
+                "reference": "8866a58fa866f6872f2a6ea0e04ad56480f0f440",
                 "shasum": ""
             },
             "require": {
+                "ext-mbstring": "*",
                 "ext-openssl": "*",
-                "php": ">=5.5"
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
-                "mdanter/ecc": "~0.3.1",
                 "mikey179/vfsstream": "~1.5",
                 "phpmd/phpmd": "~2.2",
                 "phpunit/php-invoker": "~1.1",
-                "phpunit/phpunit": "~4.5",
+                "phpunit/phpunit": "^5.7 || ^7.3",
                 "squizlabs/php_codesniffer": "~2.3"
-            },
-            "suggest": {
-                "mdanter/ecc": "Required to use Elliptic Curves based algorithms."
             },
             "type": "library",
             "extra": {
@@ -1769,30 +1767,30 @@
                 "JWS",
                 "jwt"
             ],
-            "time": "2018-11-11T12:22:26+00:00"
+            "time": "2019-05-22T09:44:23+00:00"
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.46",
+            "version": "1.0.52",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2"
+                "reference": "c5a5097156387970e6f0ccfcdf03f752856f3391"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2",
-                "reference": "f3e0d925c18b92cf3ce84ea5cc58d62a1762a2b2",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/c5a5097156387970e6f0ccfcdf03f752856f3391",
+                "reference": "c5a5097156387970e6f0ccfcdf03f752856f3391",
                 "shasum": ""
             },
             "require": {
+                "ext-fileinfo": "*",
                 "php": ">=5.5.9"
             },
             "conflict": {
                 "league/flysystem-sftp": "<1.0.6"
             },
             "require-dev": {
-                "ext-fileinfo": "*",
                 "phpspec/phpspec": "^3.4",
                 "phpunit/phpunit": "^5.7.10"
             },
@@ -1853,7 +1851,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2018-08-22T07:45:22+00:00"
+            "time": "2019-05-20T20:21:14+00:00"
         },
         {
             "name": "monolog/monolog",
